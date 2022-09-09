@@ -1,5 +1,7 @@
 import { v4 } from "uuid";
+import Toastify from "toastify-js";
 
+import "toastify-js/src/toastify.css";
 import "./style.css";
 
 const taskForm = document.querySelector<HTMLFormElement>("#taskForm");
@@ -28,6 +30,15 @@ taskForm?.addEventListener("submit", (e) => {
   });
 
   localStorage.setItem("tasks", JSON.stringify(tasks));
+
+  Toastify({
+    text: "Task added successfully",
+    duration: 2000,
+    close: true,
+    gravity: "top",
+    position: "right",
+    backgroundColor: "bg-green-500",
+  }).showToast();
 
   renderTasks(tasks);
   taskForm.reset();
@@ -74,6 +85,14 @@ function renderTasks(tasks: Task[]) {
       const index = tasks.findIndex((t) => t.id === task.id);
       tasks.splice(index, 1);
       localStorage.setItem("tasks", JSON.stringify(tasks));
+      Toastify({
+        text: "Task deleted successfully",
+        duration: 1000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red",
+      }).showToast();
       renderTasks(tasks);
       //   console.log(index);
     });
